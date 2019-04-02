@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+
+<form method="post" class="ui form" style="margin-left: 10px;" enctype="multipart/form-data">{% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div class="ui negative message">
+      <ul class="list">
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+
+  {% for field in form.visible_fields %}
+
+    {% for error in field.errors %}
+    <div class="ui negative message">
+      {{ error }}
+    </div>
+    {% endfor %}
+
+    {% if field.field.widget.input_type == 'select'%}
+      <div class="field" >
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {% render_field field class+="ui dropdown" %}
+      </div>
+
+    {% elif field.field.widget.input_type == 'checkbox'%}
+      <div class="field" >
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="ui checkbox">
+          {{ field }}
+          <label></label>
+        </div>
+      </div>
+
+    {% elif field.field.widget.input_type == 'file'%}
+      <div class="field" >
+        <label for="{{ field.id_for_label }}">Image</label>
+        <label for="{{ field.id_for_label }}" class="ui icon button">
+        <i class="file icon"></i>
+        Open File</label>
+        <input type="file" name="image" accept="image/*" required="" id="id_image" style="display: none;">
+      </div>
+
+    {% else %}
+      <div class="field" >
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endif %}
+
+
+  {% endfor %}
+
+  <input class="ui button {% if color %}right floated {% endif %} {{ color }}" type="submit" value="{{ button_label }}">
+</form>

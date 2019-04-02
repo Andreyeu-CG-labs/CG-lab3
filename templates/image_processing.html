@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Image Processing{% endblock %}
+
+{% block content %}
+  <div class="ui stackable two column grid container segment text">
+    <div class="row divided">
+      <div class="column">
+        <h3>Image</h3>
+        <a href="/"><img src="{% static 'current_image.png' %}" class="ui big bordered rounded image" style="max-width: 125%"></a>
+
+      </div>
+      <div class="column six wide right floated">
+      <h3>Options</h3>
+        {% include 'form.html' with button_label="Apply" color="primary" %}
+    </div>
+    </div>
+    </div>
+    <div class="ui stackable two column grid container segment text">
+      <h3 style="margin-top: 14px">Histograms</h3>
+    <div class="row">
+
+      <div class="column">
+        <h4>Brightness</h4>
+        <img src="{% static 'brightness_histogram.png' %}" class="ui large bordered rounded image">
+      </div>
+      <div class="column">
+        <h4>RGB</h4>
+        <img src="{% static 'rgb_histogram.png' %}" class="ui large bordered rounded image">
+      </div>
+    </div>
+    </div>
+
+{% endblock %}
